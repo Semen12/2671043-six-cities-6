@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { AuthStatus } from '../../const';
 type PrivateRouteProps={
-  authStatus: keyof typeof AuthStatus;
+  authStatus: AuthStatus;
   children: React.ReactNode;
 }
-export const PrivateRoute = ({authStatus, children}:PrivateRouteProps)=>(authStatus === 'Auth') ? children : <Navigate to="/login" />;
+export const PrivateRoute = ({authStatus, children}:PrivateRouteProps)=>(authStatus === AuthStatus.Auth) ? children : <Navigate to="/login" />;

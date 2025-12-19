@@ -3,7 +3,7 @@ import { Offer } from '../../types/offer';
 
 type PlaceCardProps = {
   offer: Offer;
-  onActiveCard: (id: number) => void;
+  onActiveCard: (id: number | null) => void;
   cardType: 'cities' | 'favorites'; // Мы добавили этот проп вместо className
 };
 
@@ -23,7 +23,7 @@ export const PlaceCard = ({ offer, onActiveCard, cardType }: PlaceCardProps) => 
 
 
   return (
-    <article className={`${articleClassName} place-card`} onMouseOver={() => onActiveCard(offer.id)} >
+    <article className={`${articleClassName} place-card`} onMouseEnter={() => onActiveCard(offer.id)} onMouseLeave={() => onActiveCard(null)} >
       {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>

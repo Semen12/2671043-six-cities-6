@@ -1,12 +1,13 @@
 import { HousingType } from '../const';
 
-type City = {
+export type Location = {
+  latitude: number;
+  longitude: number;
+  zoom: number;
+};
+export type City = {
   name: string;
-  location: {
-    latitude: number;
-    longitude: number;
-    zoom: number;
-  };
+  location: Location;
 }
 export type Offer = {
   id:number;
@@ -18,4 +19,5 @@ export type Offer = {
   isFavorite:boolean;
   typeOfHousing:HousingType;
   city: City;
+  location: Location;
 }

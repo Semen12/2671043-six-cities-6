@@ -3,7 +3,7 @@ import { PlaceCard } from '../place-card/place-card';
 
 type OfferListProp={
   offers: Offer[];
-  onActiveCard:(id:number) =>void;
+  onActiveCard:(id:number | null) =>void;
   cardType: 'cities' | 'favorites';
 }
 

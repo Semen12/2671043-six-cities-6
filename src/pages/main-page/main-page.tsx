@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Offer } from '../../types/offer';
 import { OfferList } from '../../components/offers-list/offers-list';
+import { MapOffers } from '../../components/map-offers/map-offers';
+
 
 type MainPageProps = {
   placesCount:number;
@@ -9,9 +11,9 @@ type MainPageProps = {
 export const MainPage = ({placesCount,offers}:MainPageProps) =>{
 
 
-  const [activeCardId, setActiveCardId] = useState<number | null>(null);
+  const [activeCardId, setActiveCardId] = useState<number|null>(null);
 
-  const handleCardHover = (id: number) => {
+  const handleCardHover = (id: number | null) => {
     setActiveCardId(id);
   };
 
@@ -110,7 +112,7 @@ export const MainPage = ({placesCount,offers}:MainPageProps) =>{
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <MapOffers selectedOffer={activeCardId} offers={offers} city={offers[0].city} />
             </div>
           </div>
         </div>

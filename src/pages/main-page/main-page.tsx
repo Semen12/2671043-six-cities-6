@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Offer } from '../../types/offer';
 import { OfferList } from '../../components/offers-list/offers-list';
 import { MapOffers } from '../../components/map-offers/map-offers';
+import { PlaceCardType } from '../../const';
 
 
 type MainPageProps = {
@@ -108,11 +109,11 @@ export const MainPage = ({placesCount,offers}:MainPageProps) =>{
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OfferList onActiveCard={handleCardHover} offers={offers} cardType='cities'/>
+                <OfferList onActiveCard={handleCardHover} offers={offers} cardType={PlaceCardType.Cities}/>
               </div>
             </section>
             <div className="cities__right-section">
-              <MapOffers selectedOffer={activeCardId} offers={offers} city={offers[0].city} />
+              <MapOffers className="cities__map" selectedOffer={activeCardId} offers={offers} city={offers[0].city} />
             </div>
           </div>
         </div>

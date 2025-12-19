@@ -1,25 +1,26 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
+import { PlaceCardType } from '../../const';
 
 type PlaceCardProps = {
   offer: Offer;
   onActiveCard: (id: number | null) => void;
-  cardType: 'cities' | 'favorites'; // Мы добавили этот проп вместо className
+  cardType: PlaceCardType;
 };
 
 export const PlaceCard = ({ offer, onActiveCard, cardType }: PlaceCardProps) => {
-  // Логика выбора значений в зависимости от типа карточки
-  const isFavorites = cardType === 'favorites';
+
 
   // 1. Класс для самого тега article
-  const articleClassName = isFavorites ? 'favorites__card' : 'cities__card';
+  const articleClassName = `${cardType}__card`;
 
   // 2. Класс для обертки картинки
-  const imgWrapperClassName = isFavorites ? 'favorites__image-wrapper' : 'cities__image-wrapper';
+  const imgWrapperClassName = `${cardType}__image-wrapper` ;
+
 
   // 3. Размеры картинки
-  const imgWidth = isFavorites ? 150 : 260;
-  const imgHeight = isFavorites ? 110 : 200;
+  const imgWidth = cardType === PlaceCardType.Favorites ? 150 : 260;
+  const imgHeight = cardType === PlaceCardType.Favorites ? 110 : 200;
 
 
   return (

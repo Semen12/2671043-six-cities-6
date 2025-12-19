@@ -21,9 +21,10 @@ type MapProps = {
   city: City;
   offers: Offer[];
   selectedOffer: number | null;
+  className: string;
 };
 
-export const MapOffers = ({ city, offers, selectedOffer }: MapProps) => {
+export const MapOffers = ({ city, offers, selectedOffer, className }: MapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const map = useMap({ renderRef: mapRef, city });
 
@@ -65,5 +66,5 @@ export const MapOffers = ({ city, offers, selectedOffer }: MapProps) => {
     });
   }, [selectedOffer]);
 
-  return <section className="cities__map map" ref={mapRef}></section>;
+  return <section className={`${className} map`} ref={mapRef}></section>;
 };

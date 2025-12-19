@@ -1,5 +1,6 @@
 import { Offer } from '../../types/offer';
 import { PlaceCard } from '../../components/place-card/place-card';
+import { PlaceCardType } from '../../const';
 
 type FavoritesPageProps = {
   offers: Offer[];
@@ -63,7 +64,7 @@ export const FavoritesPage = ({ offers }: FavoritesPageProps) => {
                         <PlaceCard
                           key={offer.id}
                           offer={offer}
-                          cardType="favorites" // Переключаем вид карточки
+                          cardType={PlaceCardType.Favorites} // Переключаем вид карточки
                           onActiveCard={() => {}} // Заглушка, так как здесь нет карты рядом
                         />
                       ))}

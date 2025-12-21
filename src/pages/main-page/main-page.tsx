@@ -4,11 +4,15 @@ import { MapOffers } from '../../components/map-offers/map-offers';
 import { PlaceCardType } from '../../const';
 import { LocationsList } from '../../components/locations-list/locations-list';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
-import { changeCity } from '../../store/action';
+import { changeCity, changeSort } from '../../store/action';
+import { PlacesSorting } from '../../components/places-sorting/places-sorting';
+import { sortOffers } from '../../utils/offers';
+
 
 export const MainPage = () => {
   const offers = useAppSelector((state) => state.offers);
   const cityActive = useAppSelector((state) => state.cityActive);
+  const currentSortOption = useAppSelector((state) => state.currentSortOption);
 
   const dispatch = useAppDispatch();
 
@@ -20,8 +24,10 @@ export const MainPage = () => {
     (offer) => offer.city.name === cityActive
   );
 
+  const sortedOffers = sortOffers(currentOffers, currentSortOption);
+
   // Вычисляем количество мест динамически
-  const placesCount = currentOffers.length;
+  const placesCount = sortedOffers.length;
   const isOffersEmpty = placesCount === 0;
 
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
@@ -82,7 +88,6 @@ export const MainPage = () => {
         </div>
         <div className="cities">
           {isOffersEmpty ? (
-          /* Сценарий 1: Предложений нет */
             <div className="cities__places-container cities__places-container--empty container">
               <section className="cities__no-places">
                 <div className="cities__status-wrapper tabs__content">
@@ -101,36 +106,11 @@ export const MainPage = () => {
                 <b className="places__found">
                   {placesCount} places to stay in {cityActive}
                 </b>
-                <form className="places__sorting" action="#" method="get">
-                  <span className="places__sorting-caption">Sort by</span>
-                  <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                    <svg className="places__sorting-arrow" width="7" height="4">
-                      <use xlinkHref="#icon-arrow-select"></use>
-                    </svg>
-                  </span>
-                  <ul className="places__options places__options--custom places__options--opened">
-                    <li
-                      className="places__option places__option--active"
-                      tabIndex={0}
-                    >
-                    Popular
-                    </li>
-                    <li className="places__option" tabIndex={0}>
-                    Price: low to high
-                    </li>
-                    <li className="places__option" tabIndex={0}>
-                    Price: high to low
-                    </li>
-                    <li className="places__option" tabIndex={0}>
-                    Top rated first
-                    </li>
-                  </ul>
-                </form>
+                <PlacesSorting currentSort={currentSortOption} onChange={(option)=>dispatch(changeSort(option))}/>
                 <div className="cities__places-list places__list tabs__content">
                   <OfferList
                     onActiveCard={handleCardHover}
-                    offers={currentOffers}
+                    offers={sortedOffers}
                     cardType={PlaceCardType.Cities}
                   />
                 </div>
@@ -139,8 +119,8 @@ export const MainPage = () => {
                 <MapOffers
                   className="cities__map"
                   selectedOffer={activeCardId}
-                  offers={currentOffers}
-                  city={currentOffers[0]?.city}
+                  offers={sortedOffers}
+                  city={sortedOffers[0]?.city}
                 />
               </div>
             </div>

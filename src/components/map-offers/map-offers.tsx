@@ -43,8 +43,8 @@ export const MapOffers = ({ city, offers, selectedOffer, className }: MapProps) 
 
       offers.forEach((offer) => {
         const marker = new Marker({
-          lat: offer.location.latitude,
-          lng: offer.location.longitude,
+          lat: offer.location.latitude ,
+          lng: offer.location.longitude ,
         });
 
         marker

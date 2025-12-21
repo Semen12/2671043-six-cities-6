@@ -1,12 +1,10 @@
-import { Offer } from '../../types/offer';
 import { PlaceCard } from '../../components/place-card/place-card';
 import { PlaceCardType } from '../../const';
+import { useAppSelector } from '../../hooks/use-store';
 
-type FavoritesPageProps = {
-  offers: Offer[];
-};
 
-export const FavoritesPage = ({ offers }: FavoritesPageProps) => {
+export const FavoritesPage = () => {
+  const offers = useAppSelector((state) => state.offers);
   // 1. Фильтруем только избранные
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
 

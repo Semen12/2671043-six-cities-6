@@ -1,3 +1,4 @@
+//единый стиль перечисления потом передалть !
 export enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -48,3 +49,14 @@ export enum PlaceCardType {
   Favorites = 'favorites',
   NearPlaces = 'near-places',
 }
+
+export const CITY_DEFAULT = 'Paris';
+
+export const CITIES = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+] as const;

@@ -6,7 +6,9 @@ import { SortOption } from '../const';
 export const changeCity = createAction<string>('city/changeCity');
 
 // Создаем действие для заполнения списка предложений
-export const fillOffers = createAction<Offer[]>('offers/fillOffers');
+export const loadOffers = createAction<Offer[]>('offers/loadOffers');
 
 // Создаем действие для смены сортировки
 export const changeSort = createAction<SortOption>('offers/changeSort');
+
+export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');

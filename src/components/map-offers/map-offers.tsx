@@ -20,7 +20,7 @@ const currentCustomIcon = new Icon({
 type MapProps = {
   city: City;
   offers: Offer[];
-  selectedOffer: number | null;
+  selectedOffer: string | null;
   className: string;
 };
 
@@ -28,11 +28,21 @@ export const MapOffers = ({ city, offers, selectedOffer, className }: MapProps) 
   const mapRef = useRef<HTMLDivElement>(null);
   const map = useMap({ renderRef: mapRef, city });
 
-  const markersRef = useRef<Map<number, Marker>>(new Map());
+  const markersRef = useRef<Map<string, Marker>>(new Map());
 
   const layerGroupRef = useRef(layerGroup());
 
-  //Синхронизация маркеров со списком предложений
+  useEffect(() => {
+    if (map) {
+
+      map.setView(
+        [city.location.latitude, city.location.longitude],
+        city.location.zoom
+      );
+
+    }
+  }, [map, city]);
+
   useEffect(() => {
     if (map) {
 

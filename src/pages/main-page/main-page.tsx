@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 import { changeCity, changeSort } from '../../store/action';
 import { PlacesSorting } from '../../components/places-sorting/places-sorting';
 import { sortOffers } from '../../utils/offers';
+import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 
 
 export const MainPage = () => {
@@ -30,11 +31,17 @@ export const MainPage = () => {
   const placesCount = sortedOffers.length;
   const isOffersEmpty = placesCount === 0;
 
-  const [activeCardId, setActiveCardId] = useState<number | null>(null);
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
-  const handleCardHover = (id: number | null) => {
+  const handleCardHover = (id: string | null) => {
     setActiveCardId(id);
   };
+
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+
+  if (isOffersDataLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="page page--gray page--main">

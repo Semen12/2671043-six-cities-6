@@ -12,10 +12,10 @@ export enum AuthStatus {
 }
 
 export enum HousingType {
-  Apartment = 'Apartment',
-  House = 'House',
-  Hotel = 'Hotel',
-  Room = 'Room',
+  Apartment = 'apartment',
+  House = 'house',
+  Hotel = 'hotel',
+  Room = 'room',
 }
 
 export const MIN_COMMENT_LENGTH = 50;
@@ -66,4 +66,10 @@ export enum SortOption {
   PriceLowToHigh = 'Price: low to high',
   PriceHighToLow = 'Price: high to low',
   TopRatedFirst = 'Top rated first',
+}
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
 }

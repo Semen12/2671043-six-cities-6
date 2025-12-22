@@ -10,14 +10,14 @@ export type City = {
   location: Location;
 }
 export type Offer = {
-  id:number;
+  id:string;
   title:string;
-  image:string;
+  previewImage:string;
   isPremium:boolean;
-  pricePerNight:number;
+  price:number;
   rating:number;
   isFavorite:boolean;
-  typeOfHousing:HousingType;
+  type:HousingType;
   city: City;
   location: Location;
 }

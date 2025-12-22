@@ -4,7 +4,7 @@ import { PlaceCardType } from '../../const';
 
 type PlaceCardProps = {
   offer: Offer;
-  onActiveCard: (id: number | null) => void;
+  onActiveCard: (id: string | null) => void;
   cardType: PlaceCardType;
 };
 
@@ -36,7 +36,7 @@ export const PlaceCard = ({ offer, onActiveCard, cardType }: PlaceCardProps) => 
         <Link to={`/offer/${offer.id}`} >
           <img
             className="place-card__image"
-            src={offer.image}
+            src={offer.previewImage}
             width={imgWidth} // Используем переменную
             height={imgHeight} // Используем переменную
             alt="Place image"
@@ -47,7 +47,7 @@ export const PlaceCard = ({ offer, onActiveCard, cardType }: PlaceCardProps) => 
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{offer.pricePerNight}</b>
+            <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className="place-card__bookmark-button button" type="button">
@@ -66,7 +66,7 @@ export const PlaceCard = ({ offer, onActiveCard, cardType }: PlaceCardProps) => 
         <h2 className="place-card__name">
           <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.typeOfHousing}</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );

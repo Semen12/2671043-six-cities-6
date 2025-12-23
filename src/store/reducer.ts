@@ -1,7 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { CITY_DEFAULT, SortOption } from '../const';
-import { changeCity, changeSort, loadOffers, setOffersDataLoadingStatus } from './action';
+import { AuthorizationStatus, CITY_DEFAULT, SortOption } from '../const';
+import { changeCity, changeSort, loadOffers, requireAuthorization, setError, setOffersDataLoadingStatus, setUser } from './action';
 import { Offer } from '../types/offer';
+import { UserData } from '../types/auth-data';
 
 
 type InitialState = {
@@ -9,6 +10,9 @@ type InitialState = {
   offers: Offer[];
    currentSortOption: SortOption;
   isOffersDataLoading: boolean;
+  authorizationStatus: AuthorizationStatus;
+  error: string | null;
+  user: UserData | null;
 };
 
 const initialState: InitialState = {
@@ -16,6 +20,9 @@ const initialState: InitialState = {
   cityActive: CITY_DEFAULT,
   currentSortOption: SortOption.Popular,
   isOffersDataLoading: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  error: null,
+  user: null
 };
 
 
@@ -33,7 +40,17 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeSort, (state, action) => {
       state.currentSortOption = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
+    })
+    .addCase(setUser, (state, action) => {
+      state.user = action.payload;
     });
+
 });
 
 export { reducer };

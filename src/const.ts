@@ -6,11 +6,11 @@ export enum AppRoute {
   Offer = '/offer/:id',
 }
 
-export enum AuthStatus {
-  Auth = 'Auth',
-  NoAuth = 'NoAuth',
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
 }
-
 export enum HousingType {
   Apartment = 'apartment',
   House = 'house',

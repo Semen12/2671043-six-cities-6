@@ -1,14 +1,18 @@
 import { createAction } from '@reduxjs/toolkit';
 import { Offer } from '../types/offer';
-import { SortOption } from '../const';
-// Создаем действие для смены города
-// <string> означает, что вместе с действием мы будем передавать строку (название города)
+import { AuthorizationStatus, SortOption } from '../const';
+import { UserData } from '../types/auth-data';
+
 export const changeCity = createAction<string>('city/changeCity');
 
-// Создаем действие для заполнения списка предложений
 export const loadOffers = createAction<Offer[]>('offers/loadOffers');
 
-// Создаем действие для смены сортировки
 export const changeSort = createAction<SortOption>('offers/changeSort');
 
 export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
+
+export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
+
+export const setError = createAction<string | null>('app/setError');
+
+export const setUser = createAction<UserData | null>('user/setUser');

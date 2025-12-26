@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import { PlaceCardType } from '../../const';
+import { memo } from 'react';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -8,17 +9,11 @@ type PlaceCardProps = {
   cardType: PlaceCardType;
 };
 
-export const PlaceCard = ({ offer, onActiveCard, cardType }: PlaceCardProps) => {
+export const PlaceCard = memo(({ offer, onActiveCard, cardType }: PlaceCardProps) => {
 
-
-  // 1. Класс для самого тега article
   const articleClassName = `${cardType}__card`;
-
-  // 2. Класс для обертки картинки
   const imgWrapperClassName = `${cardType}__image-wrapper` ;
 
-
-  // 3. Размеры картинки
   const imgWidth = cardType === PlaceCardType.Favorites ? 150 : 260;
   const imgHeight = cardType === PlaceCardType.Favorites ? 110 : 200;
 
@@ -31,14 +26,13 @@ export const PlaceCard = ({ offer, onActiveCard, cardType }: PlaceCardProps) => 
         </div>
       )}
 
-      {/* Используем вычисленный класс обертки */}
       <div className={`${imgWrapperClassName} place-card__image-wrapper`}>
         <Link to={`/offer/${offer.id}`} >
           <img
             className="place-card__image"
             src={offer.previewImage}
-            width={imgWidth} // Используем переменную
-            height={imgHeight} // Используем переменную
+            width={imgWidth}
+            height={imgHeight}
             alt="Place image"
           />
         </Link>
@@ -70,4 +64,6 @@ export const PlaceCard = ({ offer, onActiveCard, cardType }: PlaceCardProps) => 
       </div>
     </article>
   );
-};
+});
+
+PlaceCard.displayName = 'PlaceCard';

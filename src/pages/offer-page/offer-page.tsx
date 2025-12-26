@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { CommentForm } from '../../components/comment-form/comment-form';
 import { MapOffers } from '../../components/map-offers/map-offers';
 import { OfferList } from '../../components/offers-list/offers-list';
@@ -11,6 +11,15 @@ import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 import { fetchOfferDataAction } from '../../store/api-actions';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import { NotFoundPage } from '../not-found-page/not-found-page';
+import {
+  getComments,
+  getErrorStatus,
+  getIsOffersDataLoading,
+  getNearbyOffers,
+  getOffer,
+} from '../../store/app-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { Offer } from '../../types/offer';
 
 export const OfferPage = () => {
   const { id } = useParams();
@@ -18,46 +27,47 @@ export const OfferPage = () => {
 
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
-  const offer = useAppSelector((state) => state.offer);
-  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
-  const reviews = useAppSelector((state) => state.comments);
-  const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
-  const hasError = useAppSelector((state) => state.hasError);
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
+  const offer = useAppSelector(getOffer);
+  const nearbyOffers = useAppSelector(getNearbyOffers);
+  const reviews = useAppSelector(getComments);
+  const isOfferLoading = useAppSelector(getIsOffersDataLoading);
+  const hasError = useAppSelector(getErrorStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  const visibleImages = useMemo(
+    () => offer?.images.slice(0, 6),
+    [offer?.images]
   );
 
+  const visibleNearby = useMemo(() => nearbyOffers.slice(0, 3), [nearbyOffers]);
+
+  const mapOffers = useMemo(
+    () => [...visibleNearby, { ...offer, previewImage: '' } as Offer],
+    [visibleNearby, offer]
+  );
   useEffect(() => {
     if (id) {
       dispatch(fetchOfferDataAction(id));
     }
   }, [id, dispatch]);
 
-  const handleCardHover = (hoveredId: string | null) => {
+  const handleCardHover = useCallback((hoveredId: string | null) => {
     setActiveCardId(hoveredId);
-  };
+  }, []);
 
-  //  Обработка состояний загрузки и ошибок
+
   if (hasError) {
     return <NotFoundPage />;
   }
 
-  // Если грузится или offer еще не пришел (null)
+
   if (isOfferLoading || !offer) {
     return <LoadingScreen />;
   }
 
-
-  const visibleImages = offer.images.slice(0, 6);
-  const visibleNearby = nearbyOffers.slice(0, 3);
-
-
   const sortedReviews = [...reviews]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 10);
-
-
-  const mapOffers = [...visibleNearby, { ...offer, previewImage: '' }];
 
   return (
     <div className="page">
@@ -67,7 +77,7 @@ export const OfferPage = () => {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {visibleImages.map((image) => (
+              {visibleImages?.map((image) => (
                 <div className="offer__image-wrapper" key={image}>
                   <img
                     className="offer__image"
@@ -103,8 +113,7 @@ export const OfferPage = () => {
                 <div className="offer__stars rating__stars">
                   <span
                     style={{ width: `${Math.round(offer.rating) * 20}%` }}
-                  >
-                  </span>
+                  ></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">
@@ -140,7 +149,11 @@ export const OfferPage = () => {
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className={`offer__avatar-wrapper user__avatar-wrapper ${offer.host.isPro ? 'offer__avatar-wrapper--pro' : ''}`}>
+                  <div
+                    className={`offer__avatar-wrapper user__avatar-wrapper ${
+                      offer.host.isPro ? 'offer__avatar-wrapper--pro' : ''
+                    }`}
+                  >
                     <img
                       className="offer__avatar user__avatar"
                       src={offer.host.avatarUrl}
@@ -150,7 +163,9 @@ export const OfferPage = () => {
                     />
                   </div>
                   <span className="offer__user-name">{offer.host.name}</span>
-                  {offer.host.isPro && <span className="offer__user-status">Pro</span>}
+                  {offer.host.isPro && (
+                    <span className="offer__user-status">Pro</span>
+                  )}
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">{offer.description}</p>
@@ -158,7 +173,8 @@ export const OfferPage = () => {
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">
-                  Reviews &middot; <span className="reviews__amount">{reviews.length}</span>
+                  Reviews &middot;{' '}
+                  <span className="reviews__amount">{reviews.length}</span>
                 </h2>
 
                 {/* Список отзывов с реальными данными */}

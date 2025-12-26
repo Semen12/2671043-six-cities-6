@@ -1,44 +1,51 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { OfferList } from '../../components/offers-list/offers-list';
 import { MapOffers } from '../../components/map-offers/map-offers';
-import { PlaceCardType } from '../../const';
+import { PlaceCardType, SortOption } from '../../const';
 import { LocationsList } from '../../components/locations-list/locations-list';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
-import { changeCity, changeSort } from '../../store/action';
 import { PlacesSorting } from '../../components/places-sorting/places-sorting';
-import { sortOffers } from '../../utils/offers';
+
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 import { Header } from '../../components/header/header';
-
+import {
+  getFilteredOffers,
+  getIsOffersDataLoading,
+} from '../../store/app-data/selectors';
+import { getCity, getSortOption } from '../../store/app-process/selectors';
+import { changeCity, changeSort } from '../../store/app-process/app-process';
 
 export const MainPage = () => {
-  const offers = useAppSelector((state) => state.offers);
-  const cityActive = useAppSelector((state) => state.cityActive);
-  const currentSortOption = useAppSelector((state) => state.currentSortOption);
-
   const dispatch = useAppDispatch();
 
-  const handleCityChange = (city: string) => {
-    dispatch(changeCity(city));
-  };
-
-  const currentOffers = offers.filter(
-    (offer) => offer.city.name === cityActive
-  );
-
-  const sortedOffers = sortOffers(currentOffers, currentSortOption);
+  const offers = useAppSelector(getFilteredOffers);
+  const cityActive = useAppSelector(getCity);
+  const currentSortOption = useAppSelector(getSortOption);
+  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
 
   // Вычисляем количество мест динамически
-  const placesCount = sortedOffers.length;
+  const placesCount = offers.length;
   const isOffersEmpty = placesCount === 0;
 
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
-  const handleCardHover = (id: string | null) => {
+  const handleCardHover = useCallback((id: string | null) => {
     setActiveCardId(id);
-  };
+  }, []);
 
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const handleCityChange = useCallback(
+    (city: string) => {
+      dispatch(changeCity(city));
+    },
+    [dispatch]
+  );
+
+  const handleSortChange = useCallback(
+    (option: SortOption) => {
+      dispatch(changeSort(option));
+    },
+    [dispatch]
+  );
 
   if (isOffersDataLoading) {
     return <LoadingScreen />;
@@ -64,7 +71,8 @@ export const MainPage = () => {
                 <div className="cities__status-wrapper tabs__content">
                   <b className="cities__status">No places to stay available</b>
                   <p className="cities__status-description">
-                                We could not find any property available at the moment in {cityActive}
+                    We could not find any property available at the moment in{' '}
+                    {cityActive}
                   </p>
                 </div>
               </section>
@@ -77,11 +85,14 @@ export const MainPage = () => {
                 <b className="places__found">
                   {placesCount} places to stay in {cityActive}
                 </b>
-                <PlacesSorting currentSort={currentSortOption} onChange={(option)=>dispatch(changeSort(option))}/>
+                <PlacesSorting
+                  currentSort={currentSortOption}
+                  onChange={handleSortChange}
+                />
                 <div className="cities__places-list places__list tabs__content">
                   <OfferList
                     onActiveCard={handleCardHover}
-                    offers={sortedOffers}
+                    offers={offers}
                     cardType={PlaceCardType.Cities}
                   />
                 </div>
@@ -90,8 +101,8 @@ export const MainPage = () => {
                 <MapOffers
                   className="cities__map"
                   selectedOffer={activeCardId}
-                  offers={sortedOffers}
-                  city={sortedOffers[0]?.city}
+                  offers={offers}
+                  city={offers[0]?.city}
                 />
               </div>
             </div>

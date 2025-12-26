@@ -1,4 +1,3 @@
-// 👇 Добавь эти две строчки!
 
 import { store } from '../store';
 

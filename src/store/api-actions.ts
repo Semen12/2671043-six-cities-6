@@ -51,7 +51,6 @@ export const checkAuthAction = createAsyncThunk<
 });
 
 
-
 export const fetchOfferDataAction = createAsyncThunk<
   { offer: DetailedOffer; nearby: Offer[]; comments: Review[] },
   string,

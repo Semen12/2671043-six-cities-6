@@ -42,7 +42,6 @@ export const PlacesSorting = memo(({
           isOpen ? 'places__options--opened' : ''
         }`}
       >
-        {/* Рендерим опции динамически из Enum */}
         {Object.values(SortOption).map((option) => (
           <li
             key={option}
@@ -50,7 +49,7 @@ export const PlacesSorting = memo(({
               option === currentSort ? 'places__option--active' : ''
             }`}
             tabIndex={0}
-            onClick={() => handleOptionClick(option)} // Передаем конкретную опцию
+            onClick={() => handleOptionClick(option)}
           >
             {option}
           </li>

@@ -12,6 +12,8 @@ export const getNearbyOffers = (state: State) => state[NameSpace.Data].nearbyOff
 export const getComments = (state: State) => state[NameSpace.Data].comments;
 export const getIsOfferLoading = (state: State) => state[NameSpace.Data].isOfferLoading;
 export const getErrorStatus = (state: State) => state[NameSpace.Data].hasError;
+export const getFavoritesCount = (state: State) => state[NameSpace.Data].favorites.length;
+export const getFavorites = (state: State) => state[NameSpace.Data].favorites;
 
 
 export const getFilteredOffers = createSelector(

@@ -1,21 +1,28 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
-import { logoutAction } from '../../store/api-actions';
+import { fetchFavoritesAction, logoutAction } from '../../store/api-actions';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import {
   getAuthorizationStatus,
   getUser,
 } from '../../store/user-process/selectors';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
+import { getFavoritesCount } from '../../store/app-data/selectors';
 
 export const Header = memo(() => {
   const { pathname } = useLocation();
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const user = useAppSelector(getUser);
-
   const dispatch = useAppDispatch();
 
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const user = useAppSelector(getUser);
+  const favoritesCount = useAppSelector(getFavoritesCount);
+
   const shouldRenderUserNav = pathname !== AppRoute.Login.toString();
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoritesAction());
+    }
+  }, [authorizationStatus, dispatch]);
 
   return (
     <header className="header">
@@ -50,12 +57,13 @@ export const Header = memo(() => {
                               ? `url(${user.avatarUrl})`
                               : '',
                           }}
-                        >
-                        </div>
+                        ></div>
                         <span className="header__user-name user__name">
                           {user ? user.email : ''}
                         </span>
-                        <span className="header__favorite-count">3</span>
+                        <span className="header__favorite-count">
+                          {favoritesCount}
+                        </span>
                       </Link>
                     </li>
                     <li className="header__nav-item">

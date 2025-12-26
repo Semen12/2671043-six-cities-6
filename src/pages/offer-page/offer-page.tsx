@@ -113,7 +113,8 @@ export const OfferPage = () => {
                 <div className="offer__stars rating__stars">
                   <span
                     style={{ width: `${Math.round(offer.rating) * 20}%` }}
-                  ></span>
+                  >
+                  </span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">
@@ -177,10 +178,10 @@ export const OfferPage = () => {
                   <span className="reviews__amount">{reviews.length}</span>
                 </h2>
 
-                {/* Список отзывов с реальными данными */}
+
                 <ReviewList reviews={sortedReviews} />
 
-                {/* Форма только для авторизованных */}
+
                 {authorizationStatus === AuthorizationStatus.Auth && (
                   <CommentForm offerId={offer.id} />
                 )}

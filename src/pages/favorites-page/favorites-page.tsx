@@ -1,16 +1,56 @@
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Header } from '../../components/header/header';
 import { PlaceCard } from '../../components/place-card/place-card';
-import { PlaceCardType } from '../../const';
-import { useAppSelector } from '../../hooks/use-store';
-
+import { AppRoute, PlaceCardType } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
+import { fetchFavoritesAction } from '../../store/api-actions';
+import { getFavorites } from '../../store/app-data/selectors';
+import { Footer } from '../../components/footer/footer';
 
 export const FavoritesPage = () => {
-  const offers = useAppSelector((state) => state.offers);
-  // 1. Фильтруем только избранные
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const dispatch = useAppDispatch();
 
-  // 2. Получаем уникальные города
-  const cities = Array.from(new Set(favoriteOffers.map((offer) => offer.city.name)));
+  const favorites = useAppSelector(getFavorites);
+
+  useEffect(() => {
+    dispatch(fetchFavoritesAction());
+  }, [dispatch]);
+
+  if (favorites.length === 0) {
+    return (
+      <div className="page page--favorites-empty">
+        <Header />
+        <main className="page__main page__main--favorites page__main--favorites-empty">
+          <div className="page__favorites-container container">
+            <section className="favorites favorites--empty">
+              <h1 className="visually-hidden">Favorites (empty)</h1>
+              <div className="favorites__status-wrapper">
+                <b className="favorites__status">Nothing yet saved.</b>
+                <p className="favorites__status-description">
+                  Save properties to narrow down search or plan your future
+                  trips.
+                </p>
+              </div>
+            </section>
+          </div>
+        </main>
+        <footer className="footer container">
+          <Link className="footer__logo-link" to={AppRoute.Main}>
+            <img
+              className="footer__logo"
+              src="img/logo.svg"
+              alt="6 cities logo"
+              width="64"
+              height="33"
+            />
+          </Link>
+        </footer>
+      </div>
+    );
+  }
+
+  const cities = Array.from(new Set(favorites.map((offer) => offer.city.name)));
 
   return (
     <div className="page">
@@ -31,14 +71,14 @@ export const FavoritesPage = () => {
                     </div>
                   </div>
                   <div className="favorites__places">
-                    {favoriteOffers
+                    {favorites
                       .filter((offer) => offer.city.name === cityName)
                       .map((offer) => (
                         <PlaceCard
                           key={offer.id}
                           offer={offer}
-                          cardType={PlaceCardType.Favorites} // Переключаем вид карточки
-                          onActiveCard={() => {}} // Заглушка, так как здесь нет карты рядом
+                          cardType={PlaceCardType.Favorites}
+                          onActiveCard={() => {}}
                         />
                       ))}
                   </div>
@@ -48,11 +88,7 @@ export const FavoritesPage = () => {
           </section>
         </div>
       </main>
-      <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-        </a>
-      </footer>
+      <Footer />
     </div>
   );
 };

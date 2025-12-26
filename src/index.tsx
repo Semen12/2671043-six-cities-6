@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './components/app/app';
-import { fetchOffersAction } from './store/api-actions';
+import { checkAuthAction, fetchOffersAction } from './store/api-actions';
 import { store } from './store';
+
+store.dispatch(checkAuthAction());
 
 store.dispatch(fetchOffersAction());
 

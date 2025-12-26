@@ -1,17 +1,19 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 import { logoutAction } from '../../store/api-actions';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import {
+  getAuthorizationStatus,
+  getUser,
+} from '../../store/user-process/selectors';
+import { memo } from 'react';
 
-export const Header = () => {
+export const Header = memo(() => {
   const { pathname } = useLocation();
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
-  const user = useAppSelector((state) => state.user);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const user = useAppSelector(getUser);
 
   const dispatch = useAppDispatch();
-
 
   const shouldRenderUserNav = pathname !== AppRoute.Login.toString();
 
@@ -49,7 +51,6 @@ export const Header = () => {
                               : '',
                           }}
                         >
-
                         </div>
                         <span className="header__user-name user__name">
                           {user ? user.email : ''}
@@ -88,4 +89,6 @@ export const Header = () => {
       </div>
     </header>
   );
-};
+});
+
+Header.displayName = 'Header';

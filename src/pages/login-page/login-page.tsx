@@ -4,6 +4,8 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 import { loginAction } from '../../store/api-actions';
 import { FormEvent, useRef } from 'react';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getError } from '../../store/app-process/selectors';
 
 export const LoginPage = () => {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -12,10 +14,8 @@ export const LoginPage = () => {
   const dispatch = useAppDispatch();
 
 
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
-  const error = useAppSelector((state) => state.error);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const error = useAppSelector(getError);
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return <Navigate to={AppRoute.Main} />;

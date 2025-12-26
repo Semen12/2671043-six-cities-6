@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { SortOption } from '../../const';
 
 type PlacesSortingProps = {
   currentSort: SortOption;
   onChange: (option: SortOption) => void;
 };
-export const PlacesSorting = ({
+export const PlacesSorting = memo(({
   currentSort,
   onChange,
 }: PlacesSortingProps) => {
@@ -19,6 +19,7 @@ export const PlacesSorting = ({
     onChange(option);
     setIsOpen(false);
   };
+
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -57,4 +58,6 @@ export const PlacesSorting = ({
       </ul>
     </form>
   );
-};
+});
+
+PlacesSorting.displayName = 'PlacesSorting';

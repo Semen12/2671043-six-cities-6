@@ -1,11 +1,12 @@
+import { memo } from 'react';
 import { CITIES } from '../../const';
 
 type LocationsListProps = {
-  cityActive: string; // Текущий выбранный город
-  onCityChange: (city: string) => void; // Колбэк для клика
+  cityActive: string;
+  onCityChange: (city: string) => void;
 };
 
-export const LocationsList = ({ cityActive, onCityChange }: LocationsListProps) => (
+export const LocationsList = memo(({ cityActive, onCityChange }: LocationsListProps) => (
   <section className="locations container">
     <ul className="locations__list tabs__list">
       {CITIES.map((city) => (
@@ -24,4 +25,6 @@ export const LocationsList = ({ cityActive, onCityChange }: LocationsListProps) 
       ))}
     </ul>
   </section>
-);
+));
+
+LocationsList.displayName = 'LocationsList';

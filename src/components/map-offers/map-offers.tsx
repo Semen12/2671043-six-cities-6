@@ -67,7 +67,7 @@ export const MapOffers = ({ city, offers, selectedOffer, className }: MapProps) 
     }
   }, [map, offers]);
 
-  //Точечное изменение иконки при наведении (selectedOffer)
+
   useEffect(() => {
     markersRef.current.forEach((marker, id) => {
       marker.setIcon(

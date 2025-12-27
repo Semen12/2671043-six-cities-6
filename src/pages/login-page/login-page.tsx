@@ -16,7 +16,6 @@ export const LoginPage = () => {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-
   const [randomCity] = useState(() => getRandomCity(CITIES));
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -70,7 +69,7 @@ export const LoginPage = () => {
                   placeholder="Password"
                   required
                   ref={passwordRef}
-                  // pattern="(?=.*\d)(?=.*[a-zA-Z]).+"
+                  pattern="(?=.*\d)(?=.*[a-zA-Z]).+"
                   title="Пароль должен содержать хотя бы одну цифру и букву и не должен содержать пробелы"
                 />
               </div>

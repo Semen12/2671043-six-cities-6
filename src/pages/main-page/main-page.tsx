@@ -24,7 +24,7 @@ export const MainPage = () => {
   const currentSortOption = useAppSelector(getSortOption);
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
 
-  // Вычисляем количество мест динамически
+  //количество мест динамически
   const placesCount = offers.length;
   const isOffersEmpty = placesCount === 0;
 

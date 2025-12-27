@@ -34,7 +34,7 @@ export const makeFakeUser = (): UserData => ({
   name: faker.name.findName(),
 });
 
-// Генерация части данных пользователя для отзывов и офферов
+
 const makeFakeUserShort = () => ({
   name: faker.name.findName(),
   avatarUrl: faker.internet.avatar(),
@@ -55,7 +55,7 @@ export const makeFakeOffer = (): Offer => ({
 });
 
 export const makeFakeDetailedOffer = (): DetailedOffer => {
-  // DetailedOffer расширяет Offer, но без previewImage + доп поля
+
   const offer = makeFakeOffer();
 
   return {
@@ -68,7 +68,7 @@ export const makeFakeDetailedOffer = (): DetailedOffer => {
     type: offer.type,
     city: offer.city,
     location: offer.location,
-    // Новые поля для детальной страницы
+    // для детальной страницы
     description: faker.lorem.paragraph(),
     bedrooms: faker.datatype.number({ min: 1, max: 5 }),
     goods: faker.random.arrayElements([
@@ -102,7 +102,7 @@ export const makeFakeAuthData = (): AuthData => ({
   password: faker.internet.password(),
 });
 
-// Типизация для MockStore (понадобится при тестировании асинхронных экшенов)
+
 export type AppThunkDispatch = ThunkDispatch<
   State,
   ReturnType<typeof createAPI>,

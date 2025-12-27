@@ -11,7 +11,6 @@ vi.mock('../place-card/place-card', () => ({
   PlaceCard: () => <div data-testid="place-card">Mock Place Card</div>,
 }));
 
-
 const mockStore = configureMockStore();
 
 describe('Component: FavoritesList', () => {
@@ -31,17 +30,14 @@ describe('Component: FavoritesList', () => {
 
     expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
     expect(screen.getByText(mockCity)).toBeInTheDocument();
-    // Проверяем, что наша заглушка карточки отрисовалась
+
     expect(screen.getByTestId('place-card')).toBeInTheDocument();
 
-    // 2. Проверка взаимодействия (Клик по городу)
     const cityLink = screen.getByText(mockCity);
     fireEvent.click(cityLink);
 
-    // 3. Проверяем, что экшен отправился в стор
     const actions = store.getActions();
 
-    // Ожидаем, что первый экшен - это changeCity с пейлоадом 'Paris'
     expect(actions[0].type).toBe(changeCity.type);
     expect(actions[0].payload).toBe(mockCity);
   });

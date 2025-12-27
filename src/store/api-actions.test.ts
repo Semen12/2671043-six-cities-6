@@ -31,16 +31,13 @@ describe('Async actions', () => {
   const mockAxiosAdapter = new MockAdapter(api);
   const middlewares = [thunk.withExtraArgument(api)];
 
-  // Создаем mockStore
   const mockStore = configureMockStore<State, AnyAction, AppThunkDispatch>(
     middlewares
   );
 
-
   beforeEach(() => {
     mockAxiosAdapter.reset();
   });
-
 
   describe('fetchOffersAction', () => {
     it('should dispatch "fetchOffersAction.pending" and "fetchOffersAction.fulfilled" when server response 200', async () => {
@@ -59,7 +56,6 @@ describe('Async actions', () => {
     });
   });
 
-  // (Проверка авторизации)
   describe('checkAuthAction', () => {
     it('should dispatch "checkAuthAction.fulfilled" when server response 200', async () => {
       const mockUser = makeFakeUser();
@@ -83,7 +79,9 @@ describe('Async actions', () => {
 
       try {
         await store.dispatch(checkAuthAction());
-      } catch { /* empty */ }
+      } catch {
+        /* empty */
+      }
 
       const actions = store.getActions();
 
@@ -95,7 +93,6 @@ describe('Async actions', () => {
     });
   });
 
-  // (Загрузка детальной инфо: оффер, места рядом, отзывы)
   describe('fetchOfferDataAction', () => {
     it('should dispatch fulfilled with combined data when all requests success', async () => {
       const mockOfferId = '1';
@@ -129,11 +126,10 @@ describe('Async actions', () => {
     });
   });
 
-  //  (Отправка комментария)
   describe('postCommentAction', () => {
     it('should dispatch fulfilled with updated comments when POST and GET success', async () => {
       const mockReviewData = makeFakeReviewData();
-      const mockComments = [makeFakeReviewData()]; // Ответ сервера (список комментариев)
+      const mockComments = [makeFakeReviewData()];
 
       mockAxiosAdapter
         .onPost(`${APIRoute.Comments}/${mockReviewData.offerId}`)
@@ -155,7 +151,6 @@ describe('Async actions', () => {
     });
   });
 
-  //  (Логин)
   describe('loginAction', () => {
     it('should dispatch "loginAction.pending", "fetchOffers", "fetchFavorites" and "loginAction.fulfilled" when server response 200', async () => {
       const fakeUser = makeFakeUser();
@@ -183,7 +178,6 @@ describe('Async actions', () => {
     });
   });
 
-  //  (Логаут)
   describe('logoutAction', () => {
     it('should dispatch "logoutAction.fulfilled" and fetch offers', async () => {
       mockAxiosAdapter.onDelete(APIRoute.Logout).reply(204);
@@ -201,7 +195,6 @@ describe('Async actions', () => {
     });
   });
 
-  // (Изменение избранного)
   describe('setFavoriteAction', () => {
     it('should dispatch fulfilled with updated offer', async () => {
       const mockOffer = makeFakeOffer();

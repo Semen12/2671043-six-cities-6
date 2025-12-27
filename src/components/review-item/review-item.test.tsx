@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { ReviewItem } from './review-item'; // Проверь путь
+import { ReviewItem } from './review-item';
 import { Review } from '../../types/review';
 
-// Создаем фейковый отзыв для теста
+
 const mockReview: Review = {
   id: '1',
   date: '2023-05-25T12:00:00.000Z',

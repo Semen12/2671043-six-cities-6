@@ -12,7 +12,7 @@ describe('Page: LoginPage', () => {
     const store = mockStore({
       [NameSpace.User]: { authorizationStatus: AuthorizationStatus.NoAuth },
       [NameSpace.App]: { error: null },
-      [NameSpace.Data]: { favorites: [] }, // Header может требовать
+      [NameSpace.Data]: { favorites: [] },
     });
 
     render(

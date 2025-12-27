@@ -1,7 +1,7 @@
-import { useState, ChangeEvent, FormEvent, Fragment } from 'react'; // Добавил FormEvent
+import { useState, ChangeEvent, FormEvent, Fragment } from 'react';
 import { RatingMap, MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH } from '../../const';
 import { useAppDispatch } from '../../hooks/use-store';
-import { postCommentAction } from '../../store/api-actions'; // Импорт вашего экшена
+import { postCommentAction } from '../../store/api-actions';
 import { AxiosError } from 'axios';
 
 type CommentFormProps = {

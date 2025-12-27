@@ -1,4 +1,4 @@
-//единый стиль перечисления потом передалть !
+
 export enum AppRoute {
   Main = '/',
   Login = '/login',

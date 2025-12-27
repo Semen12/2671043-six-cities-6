@@ -51,12 +51,15 @@ export const MainPage = () => {
   if (isOffersDataLoading) {
     return <LoadingScreen />;
   }
+  const mainClassName = `page__main page__main--index ${
+    isOffersEmpty ? 'page__main--index-empty' : ''
+  }`;
 
   return (
     <div className="page page--gray page--main">
       <Header />
 
-      <main className="page__main page__main--index">
+      <main className={mainClassName}>
         <h1 className="visually-hidden">Cities</h1>
 
         <div className="tabs">

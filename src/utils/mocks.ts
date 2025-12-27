@@ -1,4 +1,4 @@
-import { HousingType } from '../const';
+import { CITIES, HousingType } from '../const';
 import { City, DetailedOffer, Location, Offer } from '../types/offer';
 import { AuthData, UserData } from '../types/auth-data';
 import { Review, ReviewData } from '../types/review';
@@ -9,6 +9,12 @@ import { createAPI } from '../services/api';
 
 const housingTypes = Object.values(HousingType);
 
+type CityRandom = typeof CITIES[number];
+
+export const getRandomCity = (cities: readonly CityRandom[]): CityRandom => {
+  const randomIndex = Math.floor(Math.random() * cities.length);
+  return cities[randomIndex];
+};
 export const makeFakeLocation = (): Location => ({
   latitude: Number(faker.address.latitude()),
   longitude: Number(faker.address.longitude()),

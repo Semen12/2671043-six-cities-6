@@ -23,7 +23,7 @@ import {
   makeFakeAuthData,
   makeFakeUser,
   AppThunkDispatch,
-} from '../utils/mocks'; // Убедись, что эти генераторы есть в mocks.ts, или используй одиночные (makeFakeOffer и т.д.)
+} from '../utils/mocks';
 import { setUser } from './user-process/user-process';
 
 describe('Async actions', () => {
@@ -36,12 +36,12 @@ describe('Async actions', () => {
     middlewares
   );
 
-  // Очищаем историю запросов перед каждым тестом
+
   beforeEach(() => {
     mockAxiosAdapter.reset();
   });
 
-  // (Загрузка предложений)
+
   describe('fetchOffersAction', () => {
     it('should dispatch "fetchOffersAction.pending" and "fetchOffersAction.fulfilled" when server response 200', async () => {
       const mockOffers = [makeFakeOffer()];
@@ -101,7 +101,7 @@ describe('Async actions', () => {
       const mockOfferId = '1';
       const mockDetailedOffer = makeFakeDetailedOffer();
       const mockNearby = [makeFakeOffer()];
-      const mockComments = [makeFakeReviewData()]; // Если makeFakeReviews возвращает массив, иначе [makeFakeReview()]
+      const mockComments = [makeFakeReviewData()];
 
       mockAxiosAdapter
         .onGet(`${APIRoute.Offers}/${mockOfferId}`)
@@ -172,8 +172,8 @@ describe('Async actions', () => {
       const actionsTypes = actions.map((action) => action.type as string);
 
       expect(actionsTypes).toContain(loginAction.pending.type);
-      expect(actionsTypes).toContain(fetchOffersAction.pending.type); // Твой код вызывает это внутри логина
-      expect(actionsTypes).toContain(fetchFavoritesAction.pending.type); // И это
+      expect(actionsTypes).toContain(fetchOffersAction.pending.type);
+      expect(actionsTypes).toContain(fetchFavoritesAction.pending.type);
       expect(actionsTypes).toContain(loginAction.fulfilled.type);
 
       const fulfilledAction = actions.find(
@@ -196,12 +196,12 @@ describe('Async actions', () => {
       const actionsTypes = actions.map((action) => action.type as string);
 
       expect(actionsTypes).toContain(logoutAction.pending.type);
-      expect(actionsTypes).toContain(fetchOffersAction.pending.type); // Твой код обновляет оферы после выхода
+      expect(actionsTypes).toContain(fetchOffersAction.pending.type);
       expect(actionsTypes).toContain(logoutAction.fulfilled.type);
     });
   });
 
-  // 7. Тест setFavoriteAction (Изменение избранного)
+  // (Изменение избранного)
   describe('setFavoriteAction', () => {
     it('should dispatch fulfilled with updated offer', async () => {
       const mockOffer = makeFakeOffer();

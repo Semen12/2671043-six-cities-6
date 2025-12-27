@@ -6,7 +6,7 @@ import { NameSpace } from '../const'; // Или где у тебя лежат н
 import { State } from '../types/state'; // Твой тип стейта
 import { Action } from 'redux';
 
-// Создаем моковый стор
+
 const mockStore = configureMockStore<State, Action>();
 
 describe('Hooks: useAppDispatch & useAppSelector', () => {

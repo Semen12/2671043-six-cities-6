@@ -24,7 +24,7 @@ describe('Component: ReviewItem', () => {
     expect(screen.getByText(mockReview.comment)).toBeInTheDocument();
 
 
-    const image = screen.getByAltText(/Reviews avatar/i);
+    const image = screen.getByAltText(mockReview.user.name);
     expect(image).toHaveAttribute('src', mockReview.user.avatarUrl);
 
 

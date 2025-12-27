@@ -6,7 +6,6 @@ import { AuthData, UserData } from '../types/auth-data';
 import { Review, ReviewData } from '../types/review';
 import { APIRoute } from '../const';
 import { saveToken, dropToken } from '../services/token';
-import { setUser } from './user-process/user-process';
 
 export const fetchOffersAction = createAsyncThunk<
   Offer[],
@@ -21,13 +20,12 @@ export const checkAuthAction = createAsyncThunk<
   UserData,
   undefined,
   { dispatch: AppDispatch; state: State; extra: AxiosInstance }
->('user/checkAuth', async (_arg, { dispatch, extra: api }) => {
+>('user/checkAuth', async (_arg, { extra: api }) => {
   try {
     const { data } = await api.get<UserData>(APIRoute.Login);
     return data;
   } catch (error) {
     dropToken();
-    dispatch(setUser(null));
     throw error;
   }
 });

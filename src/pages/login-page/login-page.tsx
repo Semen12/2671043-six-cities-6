@@ -7,7 +7,7 @@ import { FormEvent, useRef, useState } from 'react';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { changeCity } from '../../store/app-process/app-process';
 import { getRandomCity } from '../../utils/mocks';
-
+const PASSWORD_PATTERN = '(?=.*\\d)(?=.*[a-zA-Z])\\S+';
 export const LoginPage = () => {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -69,7 +69,7 @@ export const LoginPage = () => {
                   placeholder="Password"
                   required
                   ref={passwordRef}
-                  pattern="(?=.*\d)(?=.*[a-zA-Z]).+"
+                  pattern={PASSWORD_PATTERN}
                   title="Пароль должен содержать хотя бы одну цифру и букву и не должен содержать пробелы"
                 />
               </div>

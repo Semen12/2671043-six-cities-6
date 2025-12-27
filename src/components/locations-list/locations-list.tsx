@@ -13,7 +13,7 @@ export const LocationsList = memo(({ cityActive, onCityChange }: LocationsListPr
         <li className="locations__item" key={city}>
           <a
             className={`locations__item-link tabs__item ${city === cityActive ? 'tabs__item--active' : ''}`}
-            href=""
+            href="#"
             onClick={(evt) => {
               evt.preventDefault();
               onCityChange(city);

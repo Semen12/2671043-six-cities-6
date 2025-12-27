@@ -19,7 +19,7 @@ type DetailMessageType = {
   }[];
 };
 
-const StatusCodeMapping: Record<number, boolean> = {
+const statusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
   [StatusCodes.UNAUTHORIZED]: false,
   [StatusCodes.NOT_FOUND]: true,
@@ -27,7 +27,7 @@ const StatusCodeMapping: Record<number, boolean> = {
 };
 
 const shouldDisplayError = (response: AxiosResponse) =>
-  !!StatusCodeMapping[response.status];
+  !!statusCodeMapping[response.status];
 
 const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';
 const REQUEST_TIMEOUT = 5000;
@@ -56,7 +56,7 @@ export const createAPI = (): AxiosInstance => {
       if (error.response && shouldDisplayError(error.response)) {
         const detailMessage = error.response.data;
 
-        toast.warn(detailMessage.details[0].messages[0] ?? detailMessage.message);
+        toast.warn(detailMessage.details?.[0]?.messages?.[0] ?? detailMessage.message);
       }
 
       if (!error.response) {

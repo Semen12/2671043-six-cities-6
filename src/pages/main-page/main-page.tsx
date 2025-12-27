@@ -6,7 +6,6 @@ import { LocationsList } from '../../components/locations-list/locations-list';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 import { PlacesSorting } from '../../components/places-sorting/places-sorting';
 
-import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 import { Header } from '../../components/header/header';
 import {
   getFilteredOffers,
@@ -15,6 +14,7 @@ import {
 import { getCity, getSortOption } from '../../store/app-process/selectors';
 import { changeCity, changeSort } from '../../store/app-process/app-process';
 import { MainEmpty } from '../../components/main-empty/main-empty';
+import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 
 export const MainPage = () => {
   const dispatch = useAppDispatch();
@@ -76,7 +76,8 @@ export const MainPage = () => {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">
-                  {placesCount} places to stay in {cityActive}
+                  {placesCount} place{placesCount !== 1 && 's'} to stay in{' '}
+                  {cityActive}
                 </b>
                 <PlacesSorting
                   currentSort={currentSortOption}
